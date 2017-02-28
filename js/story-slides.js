@@ -1,16 +1,15 @@
 $(document).ready(function(){
 
 var requestURL = "https://koivist9.firebaseio.com/.json"
-var position = 1;
+
+localStorage.clickcount = 1;
 
 
 
 /* SLIDE TEXT CHANGE */
 var slideContents = $.getJSON(requestURL, function (data) {
-
     	var mainJSON = data;	
     	console.log(mainJSON);
-    
     	function changeOne() {
     		$(".text-1-1").html(mainJSON.slide1.content);
     	}
@@ -34,8 +33,7 @@ var slideContents = $.getJSON(requestURL, function (data) {
 
 var slideAmount = $('.story-comtainer').length;
 var endPosition = (slideAmount - 1) * -100;
-console.log(endPosition); 
-console.log(slideAmount);
+
 var text11 = $(".text-1-1");
 var text21 = $(".text-2-1");
 var text31 = $(".text-3-1");
@@ -82,15 +80,17 @@ var playPause = function(){
 
 /* Back Slide */
 var backSlide = function(){
-    if(position == 1){
-        position = 4;
+    if(localStorage.clickcount == 1){
+
+        localStorage.clickcount = 4;
         storyContainer.velocity({translateY:endPosition + "%"});
         textAnimation4();  
-    }else if(position > 1){
+    }else if(localStorage.clickcount > 1){
         storyContainer.velocity({translateY:'+=100%'}, {duration:300});
-        position -= 1;
+
+        localStorage.clickcount = Number(localStorage.clickcount) -1;
         slideAction();
-        console.log(position);
+
     }else{
         console.log("mene eteenpäin");
     }
@@ -99,20 +99,20 @@ var backSlide = function(){
 
 /* Next Slide */
 var nextSlide = function(){
-    if(position === slideAmount){
-        position = 1;
+    if(localStorage.clickcount == slideAmount){
+        localStorage.clickcount = 1;
         textAnimation1();
         storyContainer.velocity({translateY:'0%'});
-    }else if(position < slideAmount){
-    storyContainer.velocity({translateY:'-=100%'}, {duration:300});
-    position += 1;
-    slideAction();
-    console.log(position);
+    }else if(localStorage.clickcount < slideAmount){
+        storyContainer.velocity({translateY:'-=100%'}, {duration:300});
+        localStorage.clickcount = Number(localStorage.clickcount) +1;
+        slideAction();
   }else {
-    console.log("mene taaksepäin");
-
+        console.log("error");
   }
 }
+
+
 
   $(".play-button").click(playPause)
   $(".next-button").click(nextSlide);
@@ -121,16 +121,16 @@ var nextSlide = function(){
 
 
 var slideAction = function(){
-    if(position == 1) {
+    if(localStorage.clickcount == 1) {
         textAnimation1();
         setOthersToDefault();
-    }else if(position == 2){
+    }else if(localStorage.clickcount == 2){
         textAnimation2();
         setOthersToDefault();
-    }else if(position == 3){
+    }else if(localStorage.clickcount == 3){
         textAnimation3();    
         setOthersToDefault();
-    }else if(position == 4){
+    }else if(localStorage.clickcount == 4){
         textAnimation4();  
         setOthersToDefault();
     }
