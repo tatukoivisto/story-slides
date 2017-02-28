@@ -6,23 +6,46 @@ html, body {
 
 }
 
-.story-comtainer {
+button {
+	position: absolute;
+	left: 50%;
+	top: 5%;
+	
+}
+
+.slide-text {
+	opacity:0;
+}
+
+.button-holder {
+	width: 100%;	
+}
+
+.back-button {
+	left:45%;
+}
+
+.next-button {
+	left:55%;
+}
+.story-line {
 	position: relative;
 	width: 80%;
 	height: 45%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
-	/*background-image: url('https://source.unsplash.com/category/nature/');
-	background-size: cover;
-	background-position: center;*/
-	display: table;
 	box-shadow: 0 20px 30px 5px rgba(110,110,110,0.50);
 	overflow: hidden;
-	
 }
+
+.story-comtainer {
+	width: 100%;
+	height: 100%;	
+}
+
 .bg-image {
-	background-image: url('https://source.unsplash.com/category/nature/');
+	
 	background-size: cover;
 	background-position: center;
 	position: absolute;
@@ -31,20 +54,29 @@ html, body {
     height: 100%;
 }
 
+.bg-random-1 {
+	background-image: url('https://source.unsplash.com/category/nature/');
+	
+}
+.bg-random-2 {
+	background-image: url('https://source.unsplash.com/category/food/');
+}
+
+.bg-random-3 {
+	background-image: url('https://source.unsplash.com/category/people/');
+}
+
+.bg-random-4 {
+	background-image: url('https://source.unsplash.com/category/buildings/');
+}
+
+
 .main-text-container {
 	position: absolute;
 	bottom: 0%;
     left: 50%;
     transform: translate(-50%,0%);
     width: 100%;
-}
-.heading-text {
-	font-family: 'Roboto Condensed', sans-serif;
-	color: #FFF;
-	text-align: center;
-	font-size: 3vw;
-	
-	
 }
 
 .main-text {
@@ -55,8 +87,7 @@ html, body {
 	margin-right: 5%;
 	text-align: center;
 	font-size: 2.8vw;
-	
-	
-	
-
+	visibility: hidden;
+	opacity: 0;
 }
+

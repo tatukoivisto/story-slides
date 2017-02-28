@@ -1,0 +1,11 @@
+{ 
+	"slide1": {
+		"content":"ENSIMMÄINEN TEKSTI"
+	},"slide2": {
+		"content":"TOINEN TEKSTI"
+	},"slide3": {
+		"content":"KOLMAS TEKSTI"
+	},"slide4": {
+		"content":"NELJÄS TEKSTI"
+	}
+}
