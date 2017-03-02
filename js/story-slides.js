@@ -2,8 +2,13 @@ $(document).ready(function(){
 
 var requestURL = "https://koivist9.firebaseio.com/.json"
 
-localStorage.clickcount = 1;
 
+
+if (localStorage.clickcount) {
+    localStorage.clickcount = Number(localStorage.clickcount);
+} else {
+    localStorage.clickcount = 0;
+}
 
 
 /* SLIDE TEXT CHANGE */
@@ -33,6 +38,7 @@ var slideContents = $.getJSON(requestURL, function (data) {
 
 var slideAmount = $('.story-comtainer').length;
 var endPosition = (slideAmount - 1) * -100;
+
 
 var text11 = $(".text-1-1");
 var text21 = $(".text-2-1");
@@ -64,30 +70,48 @@ var setOthersToDefault = function(){
 var playStatus = "pause";
 var myInterval = setInterval(nextSlide, 4000);
 
+var slideAction = function(){
+    console.log("slideAction");
+    if(localStorage.clickcount == 0) {
+        textAnimation1();
+        setOthersToDefault();
+    }else if(localStorage.clickcount == 1){
+        textAnimation2();
+        setOthersToDefault();
+    }else if(localStorage.clickcount == 2){
+        textAnimation3();    
+        setOthersToDefault();
+    }else if(localStorage.clickcount == 3){
+        textAnimation4();  
+        setOthersToDefault();
+    }
+}
+
+
+
 var playPause = function(){
     if(playStatus === "play"){
         $(".play-button").html("PLAY");
         playStatus = "pause";
         clearInterval(myInterval);
-        console.log("pause pressed")
+        console.log("pause pressed");
     }else {
         $(".play-button").html("PAUSE");
         playStatus = "play";
         myInterval = setInterval(nextSlide, 4000);
-        console.log("play pressed")
+        console.log("play pressed");
     }
 }
 
 /* Back Slide */
 var backSlide = function(){
-    if(localStorage.clickcount == 1){
-
-        localStorage.clickcount = 4;
+    var place = localStorage.clickcount * -100;
+    if(localStorage.clickcount == 0){
+        localStorage.clickcount = 3;
         storyContainer.velocity({translateY:endPosition + "%"});
         textAnimation4();  
-    }else if(localStorage.clickcount > 1){
-        storyContainer.velocity({translateY:'+=100%'}, {duration:300});
-
+    }else if(localStorage.clickcount > 0){
+        storyContainer.velocity({translateY: place + +100 + '%'}, {duration:300});
         localStorage.clickcount = Number(localStorage.clickcount) -1;
         slideAction();
 
@@ -99,42 +123,31 @@ var backSlide = function(){
 
 /* Next Slide */
 var nextSlide = function(){
-    if(localStorage.clickcount == slideAmount){
-        localStorage.clickcount = 1;
+    var place = localStorage.clickcount * -100;
+    console.log("place-next-slide " + place);
+    if(localStorage.clickcount == slideAmount - 1){
+        console.log("next-slide bact to first");
+        localStorage.clickcount = 0;
         textAnimation1();
         storyContainer.velocity({translateY:'0%'});
-    }else if(localStorage.clickcount < slideAmount){
-        storyContainer.velocity({translateY:'-=100%'}, {duration:300});
+    }else if(localStorage.clickcount < slideAmount-1){
+        console.log("next-slide-next");
+        storyContainer.velocity({translateY: place + -100 + '%'}, {duration:300});
         localStorage.clickcount = Number(localStorage.clickcount) +1;
         slideAction();
   }else {
         console.log("error");
   }
+   console.log("clickcount: " + localStorage.clickcount);
 }
 
 
 
-  $(".play-button").click(playPause)
+  $(".play-button").click(playPause); 
   $(".next-button").click(nextSlide);
   $(".back-button").click(backSlide);
 
 
-
-var slideAction = function(){
-    if(localStorage.clickcount == 1) {
-        textAnimation1();
-        setOthersToDefault();
-    }else if(localStorage.clickcount == 2){
-        textAnimation2();
-        setOthersToDefault();
-    }else if(localStorage.clickcount == 3){
-        textAnimation3();    
-        setOthersToDefault();
-    }else if(localStorage.clickcount == 4){
-        textAnimation4();  
-        setOthersToDefault();
-    }
-}
 
 
 });
